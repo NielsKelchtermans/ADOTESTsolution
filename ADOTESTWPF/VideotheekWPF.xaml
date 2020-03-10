@@ -11,6 +11,14 @@
         <CollectionViewSource x:Key="filmViewSource" 
                               d:DesignSource="{d:DesignInstance {x:Type ADOGemeenschap:Film}, 
             CreateList=True}"/>
+        <ControlTemplate x:Key="validationTemplate">
+            <StackPanel Orientation="Horizontal">
+                <AdornedElementPlaceholder/>
+                <TextBlock Text="{Binding [0].ErrorContent}"
+                           Foreground="Gray"></TextBlock>
+            </StackPanel>
+        </ControlTemplate>
+        
     </Window.Resources>
     <StackPanel Margin="5 10 10 10">
         <TextBlock Text="Videotheek - films"
@@ -101,15 +109,29 @@
                         <TextBox x:Name="titelTextBox" Grid.Column="1" 
                                  HorizontalAlignment="Left" Height="23" 
                                  Margin="3" Grid.Row="1" 
-                                 Text="{Binding Titel, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+                                 Validation.ErrorTemplate="{StaticResource validationTemplate}"
                                  VerticalAlignment="Center" Width="120"
-                                 IsEnabled="{Binding ElementName=buttonAllesOpslaan, Path=IsEnabled}"/>
+                                 >
+                            <TextBox.Text>
+                                <Binding Path="Titel"
+                                         Mode="TwoWay"
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         ValidatesOnDataErrors="True"
+                                         ValidatesOnNotifyDataErrors="True">
+                                    <Binding.ValidationRules>
+                                        <local:WaardeMoetIngevuldZijn/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+
+                            </TextBox.Text>
+                        </TextBox>
                         <Label Content="Genre:" Grid.Column="0" 
                                HorizontalAlignment="Left" Margin="3" 
                                Grid.Row="2" VerticalAlignment="Center"/>
                         <ComboBox x:Name="comboBoxGenres" Grid.Column="2" 
                                  HorizontalAlignment="Left" 
                                  Height="23" Margin="3" Grid.Row="2" 
+                                 Validation.ErrorTemplate="{StaticResource validationTemplate}"
                                  SelectedValue="{Binding Genre, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
                                  VerticalAlignment="Center" Width="120"/>
                         <Label Content="In Voorraad:" Grid.Column="0" 
@@ -118,8 +140,22 @@
                         <TextBox x:Name="inVoorraadTextBox" 
                                  Grid.Column="1" HorizontalAlignment="Left" 
                                  Height="23" Margin="3" Grid.Row="3" 
-                                 Text="{Binding InVoorraad, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
-                                 VerticalAlignment="Center" Width="120"/>
+                                 Validation.ErrorTemplate="{StaticResource validationTemplate}"
+                                  
+                                 VerticalAlignment="Center" Width="120">
+                            <TextBox.Text>
+                                <Binding Path="InVoorraad"
+                                         Mode="TwoWay"
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         ValidatesOnDataErrors="True"
+                                         ValidatesOnNotifyDataErrors="True">
+                                    <Binding.ValidationRules>
+                                        <local:GetalMoetIngevuldZijn></local:GetalMoetIngevuldZijn>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+
                         <Label Content="Uit Voorraad:" Grid.Column="0" 
                                HorizontalAlignment="Left" Margin="3" 
                                Grid.Row="4" VerticalAlignment="Center"/>
@@ -127,14 +163,29 @@
                                  HorizontalAlignment="Left" 
                                  Height="23" Margin="3" 
                                  Grid.Row="4" 
-                                 Text="{Binding UitVoorraad, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
-                                 VerticalAlignment="Center" Width="120"/>
+                                 Validation.ErrorTemplate="{StaticResource validationTemplate}"
+                                  
+                                 VerticalAlignment="Center" Width="120">
+                            <TextBox.Text>
+                                <Binding Path="UitVoorraad"
+                                         Mode="TwoWay"
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         ValidatesOnDataErrors="True"
+                                         ValidatesOnNotifyDataErrors="True">
+                                    <Binding.ValidationRules>
+                                        <local:GetalMoetIngevuldZijn></local:GetalMoetIngevuldZijn>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+
                         <Label Content="Prijs:" Grid.Column="0" 
                                HorizontalAlignment="Left" Margin="3" 
                                Grid.Row="5" VerticalAlignment="Center"/>
                         <TextBox x:Name="prijsTextBox" Grid.Column="1" 
                                  HorizontalAlignment="Left" Height="23" 
                                  Margin="3" Grid.Row="5" 
+                                 Validation.ErrorTemplate="{StaticResource validationTemplate}"
                                  Text="{Binding Prijs, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
                                  VerticalAlignment="Center" Width="120"/>
                         
@@ -144,9 +195,22 @@
                         <TextBox x:Name="totaalVerhuurdTextBox" 
                                  Grid.Column="1" HorizontalAlignment="Left" 
                                  Height="23" Margin="3" Grid.Row="6" 
-                                 Text="{Binding TotaalVerhuurd, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
-                                 VerticalAlignment="Center" Width="120"/>
-                        
+                                 Validation.ErrorTemplate="{StaticResource validationTemplate}"
+                                 
+                                 VerticalAlignment="Center" Width="120">
+                            <TextBox.Text>
+                                <Binding Path="TotaalVerhuurd"
+                                         Mode="TwoWay"
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         ValidatesOnDataErrors="True"
+                                         ValidatesOnNotifyDataErrors="True">
+                                    <Binding.ValidationRules>
+                                        <local:GetalMoetIngevuldZijn></local:GetalMoetIngevuldZijn>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+
                     </Grid>
 
                 </StackPanel>

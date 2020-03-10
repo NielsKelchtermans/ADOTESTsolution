@@ -41,18 +41,19 @@ namespace ADOTESTWPF
             var genres = (from filmpje in filmsOb
                            orderby filmpje.Genre
                            select filmpje.Genre).Distinct().ToList();
+            genres.Insert(0, "");
             comboBoxGenres.ItemsSource = genres;
 
             //alle textboxen op isEnabled false zetten
             
-            //titelTextBox.IsEnabled = false;
-            //comboBoxGenres.IsEnabled = false;
-            //inVoorraadTextBox.IsEnabled = false;
-            //uitVoorraadTextBox.IsEnabled = false;
-            //prijsTextBox.IsEnabled = false;
-            //totaalVerhuurdTextBox.IsEnabled = false;
-            
-            
+            titelTextBox.IsEnabled = false;
+            comboBoxGenres.IsEnabled = false;
+            inVoorraadTextBox.IsEnabled = false;
+            uitVoorraadTextBox.IsEnabled = false;
+            prijsTextBox.IsEnabled = false;
+            totaalVerhuurdTextBox.IsEnabled = false;
+
+
         }
         private void VuldeGrid()
         {
@@ -68,7 +69,27 @@ namespace ADOTESTWPF
         {
             buttonToevoegen.Content = "Bevestigen";
             buttonVerwijderen.Content = "Annuleren";
+            //andere knoppen
             buttonAllesOpslaan.IsEnabled = false;
+            buttonVerhuur.IsEnabled = false;
+            //alle textboxen actief
+            
+            titelTextBox.IsEnabled = true;
+            comboBoxGenres.IsEnabled = true;
+            inVoorraadTextBox.IsEnabled = true;
+            uitVoorraadTextBox.IsEnabled = true;
+            prijsTextBox.IsEnabled = true;
+            totaalVerhuurdTextBox.IsEnabled = true;
+            //inhoud van de boxen;
+            bandNrTextBox.Text = "0";
+            titelTextBox.Text = "";
+            comboBoxGenres.SelectedIndex = 0;
+            inVoorraadTextBox.Text = "0";
+            uitVoorraadTextBox.Text = "0";
+            prijsTextBox.Text = "0";
+            totaalVerhuurdTextBox.Text = "0";
+            //listbox
+            listBoxTitels.IsEnabled = false;
         }
     }
 }
