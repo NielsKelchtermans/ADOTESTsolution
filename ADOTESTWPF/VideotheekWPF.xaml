@@ -1,0 +1,108 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ADOTESTWPF"
+        xmlns:ADOGemeenschap="clr-namespace:ADOGemeenschap;assembly=ADOGemeenschap" x:Class="ADOTESTWPF.VideotheekWPF"
+        mc:Ignorable="d"
+        Title="Videotheek" Height="550" Width="500" Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="filmViewSource" 
+                              d:DesignSource="{d:DesignInstance {x:Type ADOGemeenschap:Film}, 
+            CreateList=True}"/>
+    </Window.Resources>
+    <StackPanel Margin="5 10 10 10">
+        <TextBlock Text="Videotheek - films"
+                   FontSize="20"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   Margin="80 0"/>
+        <StackPanel
+            Orientation="Horizontal">
+            <Border Width="350"
+                    Height="200"
+                    DataContext="{StaticResource filmViewSource}">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Margin="4">
+                    <ListBox x:Name="listBoxTitels"
+                             VerticalAlignment="Top"
+                             ItemsSource="{Binding}"
+                             DisplayMemberPath="Titel"
+                             Width="340"
+                             Height="190"
+                             HorizontalAlignment="Left"></ListBox>
+                </StackPanel>
+
+               
+
+
+            </Border>
+            <StackPanel Margin="10" Orientation="Vertical">
+                <Button x:Name="buttonToevoegen"
+                        Content="Toevoegen"
+                        Width="80"
+                        Height="30"
+                        Margin="0 10"/>
+                <Button x:Name="buttonVerwijderen"
+                        Content="Verwijderen"
+                        Width="80"
+                        Height="30"/>
+                <Button x:Name="buttonAllesOpslaan"
+                        Content="Alles opslaan"
+                        Width="80"
+                        Height="30"
+                        Margin="0 30"/>
+
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Margin="10" Orientation="Horizontal">
+            <Border Height="240"
+                    Width="330">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Margin="4"
+                            Height="240">
+                    <Grid x:Name="grid1" DataContext="{StaticResource filmViewSource}" HorizontalAlignment="Left" Margin="0,75,0,0" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Band Nr:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+                        <TextBox x:Name="bandNrTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding BandNr, Mode=OneWay}" VerticalAlignment="Center" Width="120"/>
+                        
+                        <Label Content="Genre Nr:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                        <TextBox x:Name="genreNrTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding GenreNr, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="In Voorraad:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                        <TextBox x:Name="inVoorraadTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding InVoorraad, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Prijs:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+                        <TextBox x:Name="prijsTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" Text="{Binding Prijs, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Titel:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
+                        <TextBox x:Name="titelTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="5" Text="{Binding Titel, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Totaal Verhuurd:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
+                        <TextBox x:Name="totaalVerhuurdTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="6" Text="{Binding TotaalVerhuurd, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Uit Voorraad:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
+                        <TextBox x:Name="uitVoorraadTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="7" Text="{Binding UitVoorraad, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                    </Grid>
+
+                </StackPanel>
+            </Border>
+            <Button x:Name="buttonVerhuur"
+                        Content="Alles opslaan"
+                        Width="80"
+                        Height="30"
+                        Margin="0 30"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
