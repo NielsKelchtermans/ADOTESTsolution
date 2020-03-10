@@ -44,7 +44,7 @@
                         Content="Toevoegen"
                         Width="80"
                         Height="30"
-                        Margin="0 10"/>
+                        Margin="0 10" Click="buttonToevoegen_Click"/>
                 <Button x:Name="buttonVerwijderen"
                         Content="Verwijderen"
                         Width="80"
@@ -53,7 +53,8 @@
                         Content="Alles opslaan"
                         Width="80"
                         Height="30"
-                        Margin="0 30"/>
+                        Margin="0 30"
+                        IsEnabled="True"/>
 
             </StackPanel>
         </StackPanel>
@@ -64,7 +65,10 @@
                             HorizontalAlignment="Center"
                             Margin="4"
                             Height="240">
-                    <Grid x:Name="grid1" DataContext="{StaticResource filmViewSource}" HorizontalAlignment="Left" Margin="0,75,0,0" VerticalAlignment="Top">
+                    <Grid x:Name="gridDetail" 
+                          DataContext="{StaticResource filmViewSource}" 
+                          HorizontalAlignment="Left" 
+                          VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
@@ -79,27 +83,76 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Label Content="Band Nr:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-                        <TextBox x:Name="bandNrTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding BandNr, Mode=OneWay}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Band Nr:" Grid.Column="0" 
+                               HorizontalAlignment="Left" 
+                               Margin="3" Grid.Row="0" 
+                               VerticalAlignment="Center"/>
+                        <TextBox x:Name="bandNrTextBox" 
+                                 Grid.Column="1" 
+                                 HorizontalAlignment="Left" 
+                                 Height="23" 
+                                 Margin="3"
+                                 IsEnabled="False"
+                                 Grid.Row="0" Text="{Binding BandNr, Mode=OneWay}" 
+                                 VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Titel:" Grid.Column="0" 
+                               HorizontalAlignment="Left" Margin="3" 
+                               Grid.Row="1" VerticalAlignment="Center"/>
+                        <TextBox x:Name="titelTextBox" Grid.Column="1" 
+                                 HorizontalAlignment="Left" Height="23" 
+                                 Margin="3" Grid.Row="1" 
+                                 Text="{Binding Titel, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+                                 VerticalAlignment="Center" Width="120"
+                                 IsEnabled="{Binding ElementName=buttonAllesOpslaan, Path=IsEnabled}"/>
+                        <Label Content="Genre:" Grid.Column="0" 
+                               HorizontalAlignment="Left" Margin="3" 
+                               Grid.Row="2" VerticalAlignment="Center"/>
+                        <ComboBox x:Name="comboBoxGenres" Grid.Column="2" 
+                                 HorizontalAlignment="Left" 
+                                 Height="23" Margin="3" Grid.Row="2" 
+                                 SelectedValue="{Binding Genre, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
+                                 VerticalAlignment="Center" Width="120"/>
+                        <Label Content="In Voorraad:" Grid.Column="0" 
+                               HorizontalAlignment="Left" Margin="3" 
+                               Grid.Row="3" VerticalAlignment="Center"/>
+                        <TextBox x:Name="inVoorraadTextBox" 
+                                 Grid.Column="1" HorizontalAlignment="Left" 
+                                 Height="23" Margin="3" Grid.Row="3" 
+                                 Text="{Binding InVoorraad, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+                                 VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Uit Voorraad:" Grid.Column="0" 
+                               HorizontalAlignment="Left" Margin="3" 
+                               Grid.Row="4" VerticalAlignment="Center"/>
+                        <TextBox x:Name="uitVoorraadTextBox" Grid.Column="1" 
+                                 HorizontalAlignment="Left" 
+                                 Height="23" Margin="3" 
+                                 Grid.Row="4" 
+                                 Text="{Binding UitVoorraad, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+                                 VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Prijs:" Grid.Column="0" 
+                               HorizontalAlignment="Left" Margin="3" 
+                               Grid.Row="5" VerticalAlignment="Center"/>
+                        <TextBox x:Name="prijsTextBox" Grid.Column="1" 
+                                 HorizontalAlignment="Left" Height="23" 
+                                 Margin="3" Grid.Row="5" 
+                                 Text="{Binding Prijs, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+                                 VerticalAlignment="Center" Width="120"/>
                         
-                        <Label Content="Genre Nr:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-                        <TextBox x:Name="genreNrTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding GenreNr, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                        <Label Content="In Voorraad:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-                        <TextBox x:Name="inVoorraadTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding InVoorraad, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                        <Label Content="Prijs:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
-                        <TextBox x:Name="prijsTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" Text="{Binding Prijs, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                        <Label Content="Titel:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
-                        <TextBox x:Name="titelTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="5" Text="{Binding Titel, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                        <Label Content="Totaal Verhuurd:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
-                        <TextBox x:Name="totaalVerhuurdTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="6" Text="{Binding TotaalVerhuurd, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                        <Label Content="Uit Voorraad:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
-                        <TextBox x:Name="uitVoorraadTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="7" Text="{Binding UitVoorraad, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Totaal Verhuurd:" Grid.Column="0" 
+                               HorizontalAlignment="Left" Margin="3" 
+                               Grid.Row="6" VerticalAlignment="Center"/>
+                        <TextBox x:Name="totaalVerhuurdTextBox" 
+                                 Grid.Column="1" HorizontalAlignment="Left" 
+                                 Height="23" Margin="3" Grid.Row="6" 
+                                 Text="{Binding TotaalVerhuurd, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+                                 VerticalAlignment="Center" Width="120"/>
+                        
                     </Grid>
 
                 </StackPanel>
             </Border>
             <Button x:Name="buttonVerhuur"
-                        Content="Alles opslaan"
+                        Content="Verhuur"
                         Width="80"
                         Height="30"
                         Margin="0 30"/>

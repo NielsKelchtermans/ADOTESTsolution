@@ -19,7 +19,7 @@ namespace ADOGemeenschap
                 using (var comFilms = conVideo.CreateCommand())
                 {
                     comFilms.CommandType = CommandType.Text;
-                    comFilms.CommandText = "select * from Films";
+                    comFilms.CommandText = "select * from Films inner join Genres on Films.GenreNr = Genres.GenreNr";
 
                     conVideo.Open();
                     using (var rdrFilms = comFilms.ExecuteReader())
@@ -31,6 +31,7 @@ namespace ADOGemeenschap
                         Int32 uitVoorraadPos = rdrFilms.GetOrdinal("UitVoorraad");
                         Int32 prijsPos = rdrFilms.GetOrdinal("Prijs");
                         Int32 totaalVerhuurdPos = rdrFilms.GetOrdinal("TotaalVerhuurd");
+                        Int32 genrePos = rdrFilms.GetOrdinal("Genre");
 
                         while (rdrFilms.Read())
                         {
@@ -41,7 +42,8 @@ namespace ADOGemeenschap
                                 rdrFilms.GetInt32(inVoorraadPos),
                                 rdrFilms.GetInt32(uitVoorraadPos),
                                 rdrFilms.GetDecimal(prijsPos),
-                                rdrFilms.GetInt32(totaalVerhuurdPos)));
+                                rdrFilms.GetInt32(totaalVerhuurdPos),
+                                rdrFilms.GetString(genrePos)));
                         }//while
 
                     }//rdr
@@ -50,5 +52,18 @@ namespace ADOGemeenschap
             return films;
 
         }
+        //public List<Genre> GetGenres()
+        //{
+        //    List<Genre> genres = new List<Genre>();
+        //    var manager = new VideoDBManager();
+        //    using (var conVideo = manager.GetConnection())
+        //    {
+        //        using (var comGenres = conVideo.CreateCommand())
+        //        {
+        //            comGenres.CommandType = CommandType.Text;
+        //            comGenres.CommandText = "select distinct"
+        //        }
+        //    }
+        //}
     }
 }

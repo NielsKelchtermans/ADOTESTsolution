@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Film.cs" />
     <Compile Include="FilmManager.cs" />
+    <Compile Include="Genre.cs" />
     <Compile Include="VideoDBManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

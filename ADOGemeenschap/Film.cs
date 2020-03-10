@@ -16,6 +16,14 @@ namespace ADOGemeenschap
 		private Int32 uitVoorraadValue;
 		private Decimal prijsValue;
 		private Int32 totaalVerhuurdValue;
+		private string genreValue;
+
+		public string Genre
+		{
+			get { return genreValue; }
+			set { genreValue = value; Changed = true; }
+		}
+
 
 		public Int32 TotaalVerhuurd
 		{
@@ -66,7 +74,7 @@ namespace ADOGemeenschap
 			//set { bandNrValue = value; }
 		}
 
-		public Film(Int32 bandNr, string titel, Int32 genreNr, Int32 inVoorraad, Int32 uitVoorraad, decimal prijs, Int32 totaalVerhuurd)
+		public Film(Int32 bandNr, string titel, Int32 genreNr, Int32 inVoorraad, Int32 uitVoorraad, decimal prijs, Int32 totaalVerhuurd, string genre)
 		{
 			bandNrValue = bandNr;
 			Titel = titel;
@@ -76,6 +84,7 @@ namespace ADOGemeenschap
 			Prijs = prijs;
 			TotaalVerhuurd = totaalVerhuurd;
 			Changed = false;
+			Genre = genre;
 		}
 
 
