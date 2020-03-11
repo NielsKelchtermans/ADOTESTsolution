@@ -64,9 +64,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Converter.cs" />
     <Compile Include="GenreMoetGekozenWorden.cs" />
     <Compile Include="GetalGroterDanNul.cs" />
     <Compile Include="GetalMoetIngevuldZijn.cs" />
+    <Compile Include="InVoorraadValidation.cs" />
+    <Compile Include="InVoorraadValidation2.cs" />
     <Compile Include="WaardeMoetIngevuldZijn.cs" />
     <Compile Include="VideotheekWPF.xaml.cs">
       <DependentUpon>VideotheekWPF.xaml</DependentUpon>

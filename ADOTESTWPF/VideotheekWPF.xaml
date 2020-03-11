@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ADOTESTWPF"
         xmlns:ADOGemeenschap="clr-namespace:ADOGemeenschap;assembly=ADOGemeenschap" x:Class="ADOTESTWPF.VideotheekWPF"
         mc:Ignorable="d"
+    xmlns:glob="clr-namespace:System.Globalization;assembly=mscorlib"  
         Title="Videotheek" Height="550" Width="500" Loaded="Window_Loaded">
     <Window.Resources>
         <CollectionViewSource x:Key="filmViewSource" 
@@ -18,7 +19,8 @@
                            Foreground="Gray"></TextBlock>
             </StackPanel>
         </ControlTemplate>
-        
+        <local:Converter x:Key="TrueNaarFalseOmgekeerd"/>
+
     </Window.Resources>
     <StackPanel Margin="5 10 10 10">
         <TextBlock Text="Videotheek - films"
@@ -40,7 +42,8 @@
                              DisplayMemberPath="Titel"
                              Width="340"
                              Height="190"
-                             HorizontalAlignment="Left"></ListBox>
+                             HorizontalAlignment="Left"
+                             IsEnabled="{Binding ElementName=buttonAllesOpslaan, Path=IsEnabled}"></ListBox>
                 </StackPanel>
 
                
@@ -56,13 +59,13 @@
                 <Button x:Name="buttonVerwijderen"
                         Content="Verwijderen"
                         Width="80"
-                        Height="30"/>
+                        Height="30" Click="buttonVerwijderen_Click"/>
                 <Button x:Name="buttonAllesOpslaan"
                         Content="Alles opslaan"
                         Width="80"
                         Height="30"
                         Margin="0 30"
-                        IsEnabled="True"/>
+                        IsEnabled="True" Click="buttonAllesOpslaan_Click"/>
 
             </StackPanel>
         </StackPanel>
@@ -111,6 +114,8 @@
                                  Margin="3" Grid.Row="1" 
                                  Validation.ErrorTemplate="{StaticResource validationTemplate}"
                                  VerticalAlignment="Center" Width="120"
+                                 IsEnabled="{Binding ElementName=buttonAllesOpslaan, 
+                                Path=IsEnabled, Converter={StaticResource TrueNaarFalseOmgekeerd} }"
                                  >
                             <TextBox.Text>
                                 <Binding Path="Titel"
@@ -132,8 +137,21 @@
                                  HorizontalAlignment="Left" 
                                  Height="23" Margin="3" Grid.Row="2" 
                                  Validation.ErrorTemplate="{StaticResource validationTemplate}"
-                                 SelectedValue="{Binding Genre, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
-                                 VerticalAlignment="Center" Width="120"/>
+                                 IsEnabled="{Binding ElementName=buttonAllesOpslaan, 
+                                Path=IsEnabled, Converter={StaticResource TrueNaarFalseOmgekeerd} }"
+                                 VerticalAlignment="Center" Width="120">
+                            <ComboBox.SelectedValue>
+                                <Binding Path="Genre"
+                                         Mode="TwoWay"
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         ValidatesOnDataErrors="True"
+                                         ValidatesOnNotifyDataErrors="True">
+                                    <Binding.ValidationRules>
+                                        <local:GenreMoetGekozenWorden></local:GenreMoetGekozenWorden>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.SelectedValue>
+                        </ComboBox>
                         <Label Content="In Voorraad:" Grid.Column="0" 
                                HorizontalAlignment="Left" Margin="3" 
                                Grid.Row="3" VerticalAlignment="Center"/>
@@ -141,7 +159,8 @@
                                  Grid.Column="1" HorizontalAlignment="Left" 
                                  Height="23" Margin="3" Grid.Row="3" 
                                  Validation.ErrorTemplate="{StaticResource validationTemplate}"
-                                  
+                                 IsEnabled="{Binding ElementName=buttonAllesOpslaan, 
+                                Path=IsEnabled, Converter={StaticResource TrueNaarFalseOmgekeerd} }" 
                                  VerticalAlignment="Center" Width="120">
                             <TextBox.Text>
                                 <Binding Path="InVoorraad"
@@ -150,7 +169,7 @@
                                          ValidatesOnDataErrors="True"
                                          ValidatesOnNotifyDataErrors="True">
                                     <Binding.ValidationRules>
-                                        <local:GetalMoetIngevuldZijn></local:GetalMoetIngevuldZijn>
+                                        <local:InVoorraadValidation></local:InVoorraadValidation>
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
@@ -164,7 +183,8 @@
                                  Height="23" Margin="3" 
                                  Grid.Row="4" 
                                  Validation.ErrorTemplate="{StaticResource validationTemplate}"
-                                  
+                                 IsEnabled="{Binding ElementName=buttonAllesOpslaan, 
+                                Path=IsEnabled, Converter={StaticResource TrueNaarFalseOmgekeerd} }" 
                                  VerticalAlignment="Center" Width="120">
                             <TextBox.Text>
                                 <Binding Path="UitVoorraad"
@@ -186,9 +206,26 @@
                                  HorizontalAlignment="Left" Height="23" 
                                  Margin="3" Grid.Row="5" 
                                  Validation.ErrorTemplate="{StaticResource validationTemplate}"
-                                 Text="{Binding Prijs, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
-                                 VerticalAlignment="Center" Width="120"/>
-                        
+                                 IsEnabled="{Binding ElementName=buttonAllesOpslaan, 
+                                Path=IsEnabled, Converter={StaticResource TrueNaarFalseOmgekeerd} }"
+                                 VerticalAlignment="Center" Width="120">
+                            <TextBox.Text>
+                                <Binding Path="Prijs"
+                                         ValidatesOnDataErrors="True"
+                                         ValidatesOnNotifyDataErrors="True"
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         Mode="TwoWay"
+                                         ConverterCulture="{x:Static glob:CultureInfo.CurrentCulture}"
+                                         StringFormat="c">
+                                    <Binding.ValidationRules>
+                                        <local:GetalGroterDanNul></local:GetalGroterDanNul>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                                         
+                            </TextBox.Text>
+                            
+                        </TextBox>
+
                         <Label Content="Totaal Verhuurd:" Grid.Column="0" 
                                HorizontalAlignment="Left" Margin="3" 
                                Grid.Row="6" VerticalAlignment="Center"/>
@@ -196,7 +233,8 @@
                                  Grid.Column="1" HorizontalAlignment="Left" 
                                  Height="23" Margin="3" Grid.Row="6" 
                                  Validation.ErrorTemplate="{StaticResource validationTemplate}"
-                                 
+                                 IsEnabled="{Binding ElementName=buttonAllesOpslaan, 
+                                Path=IsEnabled, Converter={StaticResource TrueNaarFalseOmgekeerd} }"
                                  VerticalAlignment="Center" Width="120">
                             <TextBox.Text>
                                 <Binding Path="TotaalVerhuurd"
@@ -219,7 +257,7 @@
                         Content="Verhuur"
                         Width="80"
                         Height="30"
-                        Margin="0 30"/>
+                        Margin="0 30" Click="buttonVerhuur_Click"/>
         </StackPanel>
     </StackPanel>
 </Window>
