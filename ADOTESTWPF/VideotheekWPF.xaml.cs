@@ -58,8 +58,10 @@ namespace ADOTESTWPF
             buttonToevoegen.Content = "Toevoegen";
             buttonVerwijderen.Content = "Verwijderen";
             listBoxTitels.SelectedIndex = 0;
-            
-            
+            //scrollview
+            listBoxTitels.ScrollIntoView(listBoxTitels.SelectedItem);
+
+
         }
         public void VuldeGridLokaal()
         {
@@ -73,6 +75,15 @@ namespace ADOTESTWPF
             buttonToevoegen.Content = "Toevoegen";
             buttonVerwijderen.Content = "Verwijderen";
             listBoxTitels.SelectedIndex = 0;
+
+            //binding vinden
+            Binding binding2 = BindingOperations.GetBinding(inVoorraadTextBox, TextBox.TextProperty);
+            //verwijder validationRules
+            binding2.ValidationRules.Clear();
+            //toevoegen nieuwe validionRule:
+            binding2.ValidationRules.Add(new InVoorraadValidation());
+            //scrollview
+            listBoxTitels.ScrollIntoView(listBoxTitels.SelectedItem);
         }
 
         private void buttonToevoegen_Click(object sender, RoutedEventArgs e)
@@ -97,14 +108,7 @@ namespace ADOTESTWPF
                 //andere knoppen
                 buttonAllesOpslaan.IsEnabled = false;
                 buttonVerhuur.IsEnabled = false;
-                //alle textboxen actief 
-                //titelTextBox.IsEnabled = true;
-                //comboBoxGenres.IsEnabled = true;
-                //inVoorraadTextBox.IsEnabled = true;
-                //uitVoorraadTextBox.IsEnabled = true;
-                //prijsTextBox.IsEnabled = true;
-                //totaalVerhuurdTextBox.IsEnabled = true;
-                //inhoud van de boxen;
+                
                 
                 titelTextBox.Text = "";
                 comboBoxGenres.SelectedValue = "";
